@@ -37,7 +37,7 @@ red = 'rgb(238,42,42)'
 green = 'rgb(118,180,76)'
 orange = 'rgb(242,186,84)'
 
-@st.cache  # Cache data load for faster app performance
+@st.cache_data  # Cache data load for faster app performance
 
 # Function to get all tickers and markets
 def ticker_list():
@@ -47,13 +47,14 @@ def ticker_list():
     
     for country in market_list[market_list['abbreviation'].isin(['uk','us','au'])]['abbreviation']:
         if not symbol.empty:
-            symbol=symbol.append(pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country))))
+            country = pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
+            symbol=pd.concat([symbol, country])
         else:
             symbol=pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
     
     return symbol
 
-@st.cache  # Cache data load for faster app performance
+@st.cache_data  # Cache data load for faster app performance
 def bond_yield():
     # AAA US Corporate bond yield
     bond = nasdaqdatalink.get('ML/AAAEY')
@@ -79,7 +80,7 @@ def shares_issued(ticker):
     
     return df    
 
-@st.cache
+@st.cache_data
 def yahoo_stats(stock):
     stats = si.get_stats(stock)
     val = si.get_stats_valuation(stock)
@@ -87,12 +88,12 @@ def yahoo_stats(stock):
     return stats,val
 #nws = news.get_yf_rss('nflx')
 
-@st.cache
+@st.cache_data
 def yahoo_news(stock):
     nws = news.get_yf_rss(stock)
     return nws
 
-@st.cache
+@st.cache_data
 def comp_prices(stocks):
     
     df = pd.DataFrame()
