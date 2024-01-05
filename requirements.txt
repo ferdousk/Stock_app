@@ -1,4 +1,4 @@
-pandas==2.1.1
+pandas==1.5.3
 yahoo-fin==0.8.9.1
 stocksymbol==0.0.5
 streamlit==1.29.0
