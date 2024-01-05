@@ -18,7 +18,7 @@ import json
 import re
 import nasdaqdatalink
 import math
-
+import numpy as np
 
 api_key = 'db609a4e-d7d2-43ab-87bf-21961d2d7428'
 ss = StockSymbol(api_key)
@@ -145,6 +145,8 @@ with base_info:
 
     # Columns for data visuals
     base_col_1,base_col_2,base_col_3,base_col_4 = st.columns(4)
+    
+    st.markdown(f"PAndas version is {pd.__version__}")
     
     # Use yahoo finance to get data for the main stock
     try:
