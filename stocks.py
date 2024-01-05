@@ -37,7 +37,7 @@ red = 'rgb(238,42,42)'
 green = 'rgb(118,180,76)'
 orange = 'rgb(242,186,84)'
 
-@st.cache_data  # Cache data load for faster app performance
+  # Cache data load for faster app performance
 
 # Function to get all tickers and markets
 def ticker_list():
@@ -54,7 +54,7 @@ def ticker_list():
     
     return symbol
 
-@st.cache_data  # Cache data load for faster app performance
+  # Cache data load for faster app performance
 def bond_yield():
     # AAA US Corporate bond yield
     bond = nasdaqdatalink.get('ML/AAAEY')
@@ -80,7 +80,7 @@ def shares_issued(ticker):
     
     return df    
 
-@st.cache_data
+
 def yahoo_stats(stock):
     stats = si.get_stats(stock)
     val = si.get_stats_valuation(stock)
@@ -88,12 +88,12 @@ def yahoo_stats(stock):
     return stats,val
 #nws = news.get_yf_rss('nflx')
 
-@st.cache_data
+
 def yahoo_news(stock):
     nws = news.get_yf_rss(stock)
     return nws
 
-@st.cache_data
+
 def comp_prices(stocks):
     
     df = pd.DataFrame()
@@ -124,7 +124,7 @@ def comp_prices(stocks):
 # Defining header container components
 with header:
     # Adding logo to the page
-    st.image(r'F:\Arnab\ferdous.JPG')
+    st.image(r"C:\Users\ferdo\Github\Stock_app\Stock_app\ferdous.JPG")
     
     # Page title and other text within the header container
     st.title('Stock Information and Comparison')
@@ -141,7 +141,7 @@ with base_info:
     list_symbol = df_symbol['symbol'].unique().tolist()
     
     # Get user to select the stock they want to investigate
-    main_stock = st.selectbox('Select one (1) ticker to analyse: ', df_symbol, key = 'select_symbol' ,)
+    main_stock = st.selectbox('Select one (1) ticker to analyse: ', list_symbol, key = 'select_symbol' ,)
 
     # Columns for data visuals
     base_col_1,base_col_2,base_col_3,base_col_4 = st.columns(4)
