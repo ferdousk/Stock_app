@@ -18,7 +18,7 @@ import json
 import re
 import nasdaqdatalink
 import math
-
+import numpy as np
 
 api_key = 'db609a4e-d7d2-43ab-87bf-21961d2d7428'
 ss = StockSymbol(api_key)
@@ -54,12 +54,13 @@ def ticker_list():
     
     return symbol
 
-@st.cache_data  # Cache data load for faster app performance
+@st.cache_data # Cache data load for faster app performance
 def bond_yield():
     # AAA US Corporate bond yield
     bond = nasdaqdatalink.get('ML/AAAEY')
     return bond
 
+@st.cache_data
 def shares_issued(ticker):
     #Scrape Shares Issued from Yahoo Finance balance Sheet page
     url = "https://finance.yahoo.com/quote/" + ticker + "/balance-sheet?p=" + ticker
@@ -84,7 +85,7 @@ def shares_issued(ticker):
 def yahoo_stats(stock):
     stats = si.get_stats(stock)
     val = si.get_stats_valuation(stock)
-    
+    val.columns['Field','Value']
     return stats,val
 #nws = news.get_yf_rss('nflx')
 
@@ -124,7 +125,7 @@ def comp_prices(stocks):
 # Defining header container components
 with header:
     # Adding logo to the page
-    st.image(r'F:\Arnab\ferdous.JPG')
+    st.image(r"C:\Users\ferdo\Github\Stock_app\Stock_app\ferdous.JPG")
     
     # Page title and other text within the header container
     st.title('Stock Information and Comparison')
@@ -141,10 +142,12 @@ with base_info:
     list_symbol = df_symbol['symbol'].unique().tolist()
     
     # Get user to select the stock they want to investigate
-    main_stock = st.selectbox('Select one (1) ticker to analyse: ', df_symbol, key = 'select_symbol' ,)
+    main_stock = st.selectbox('Select one (1) ticker to analyse: ', list_symbol, key = 'select_symbol' ,)
 
     # Columns for data visuals
     base_col_1,base_col_2,base_col_3,base_col_4 = st.columns(4)
+    
+    st.markdown(f"PAndas version is {pd.__version__}")
     
     # Use yahoo finance to get data for the main stock
     try:
@@ -173,9 +176,9 @@ with base_info:
 
     current_price = si.get_live_price(main_stock)
     base_col_1.metric("Current Price", round(current_price,2))        
-    base_col_2.metric("Market Cap",val_stats[val_stats[0]=='Market Cap (intraday)'][1].values[0])
-    base_col_3.metric("EV/EBITDA",val_stats[val_stats[0]=='Enterprise Value/EBITDA'][1].values[0])
-    base_col_4.metric("Forward P/E",val_stats[val_stats[0]=='Forward P/E'][1].values[0] )
+    base_col_2.metric("Market Cap",val_stats[val_stats['Field']=='Market Cap (intraday)']['Value'].values[0])
+    base_col_3.metric("EV/EBITDA",val_stats[val_stats['Field']=='Enterprise Value/EBITDA']['Value'].values[0])
+    base_col_4.metric("Forward P/E",val_stats[val_stats['Field']=='Forward P/E']['Value'].values[0] )
     
     base_col_1.metric("EPS", eps_value)
     base_col_2.metric("Book Value per share",stock_stats[stock_stats['Attribute']=='Book Value Per Share (mrq)']['Value'].values[0] )
