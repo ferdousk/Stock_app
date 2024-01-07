@@ -47,8 +47,8 @@ def ticker_list():
     
     for country in market_list[market_list['abbreviation'].isin(['uk','us','au'])]['abbreviation']:
         if not symbol.empty:
-            country = pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
-            symbol=pd.concat([symbol, country])
+            region = pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
+            symbol=pd.concat([symbol, region])
         else:
             symbol=pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
     
