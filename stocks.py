@@ -37,7 +37,7 @@ red = 'rgb(238,42,42)'
 green = 'rgb(118,180,76)'
 orange = 'rgb(242,186,84)'
 
-  # Cache data load for faster app performance
+@st.cache_data  # Cache data load for faster app performance
 
 # Function to get all tickers and markets
 def ticker_list():
@@ -54,12 +54,13 @@ def ticker_list():
     
     return symbol
 
-  # Cache data load for faster app performance
+@st.cache_data # Cache data load for faster app performance
 def bond_yield():
     # AAA US Corporate bond yield
     bond = nasdaqdatalink.get('ML/AAAEY')
     return bond
 
+@st.cache_data
 def shares_issued(ticker):
     #Scrape Shares Issued from Yahoo Finance balance Sheet page
     url = "https://finance.yahoo.com/quote/" + ticker + "/balance-sheet?p=" + ticker
@@ -80,20 +81,20 @@ def shares_issued(ticker):
     
     return df    
 
-
+@st.cache_data
 def yahoo_stats(stock):
     stats = si.get_stats(stock)
     val = si.get_stats_valuation(stock)
-    
+    val.columns['Field','Value']
     return stats,val
 #nws = news.get_yf_rss('nflx')
 
-
+@st.cache_data
 def yahoo_news(stock):
     nws = news.get_yf_rss(stock)
     return nws
 
-
+@st.cache_data
 def comp_prices(stocks):
     
     df = pd.DataFrame()
@@ -175,9 +176,9 @@ with base_info:
 
     current_price = si.get_live_price(main_stock)
     base_col_1.metric("Current Price", round(current_price,2))        
-    base_col_2.metric("Market Cap",val_stats[val_stats[0]=='Market Cap (intraday)'][1].values[0])
-    base_col_3.metric("EV/EBITDA",val_stats[val_stats[0]=='Enterprise Value/EBITDA'][1].values[0])
-    base_col_4.metric("Forward P/E",val_stats[val_stats[0]=='Forward P/E'][1].values[0] )
+    base_col_2.metric("Market Cap",val_stats[val_stats['Field']=='Market Cap (intraday)']['Value'].values[0])
+    base_col_3.metric("EV/EBITDA",val_stats[val_stats['Field']=='Enterprise Value/EBITDA']['Value'].values[0])
+    base_col_4.metric("Forward P/E",val_stats[val_stats['Field']=='Forward P/E']['Value'].values[0] )
     
     base_col_1.metric("EPS", eps_value)
     base_col_2.metric("Book Value per share",stock_stats[stock_stats['Attribute']=='Book Value Per Share (mrq)']['Value'].values[0] )
