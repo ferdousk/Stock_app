@@ -85,7 +85,6 @@ def shares_issued(ticker):
 def yahoo_stats(stock):
     stats = si.get_stats(stock)
     val = si.get_stats_valuation(stock)
-    val.columns['Field','Value']
     return stats,val
 #nws = news.get_yf_rss('nflx')
 
@@ -156,7 +155,7 @@ with base_info:
         st.warning(f'Data for {main_stock} is currently unavailable.')
         st.stop()
     
-    
+    val_stats.columns=['Field','Value']
     
     
     # Extract EPS value from stock_stats DataFrame
