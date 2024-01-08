@@ -37,7 +37,7 @@ red = 'rgb(238,42,42)'
 green = 'rgb(118,180,76)'
 orange = 'rgb(242,186,84)'
 
-@st.cache  # Cache data load for faster app performance
+@st.cache_data  # Cache data load for faster app performance
 
 # Function to get all tickers and markets
 def ticker_list():
@@ -53,7 +53,7 @@ def ticker_list():
     
     return symbol
 
-@st.cache  # Cache data load for faster app performance
+@st.cache_data  # Cache data load for faster app performance
 def bond_yield():
     # AAA US Corporate bond yield
     bond = nasdaqdatalink.get('ML/AAAEY')
@@ -79,7 +79,7 @@ def shares_issued(ticker):
     
     return df    
 
-@st.cache
+@st.cache_data
 def yahoo_stats(stock):
     stats = si.get_stats(stock)
     val = si.get_stats_valuation(stock)
@@ -87,12 +87,12 @@ def yahoo_stats(stock):
     return stats,val
 #nws = news.get_yf_rss('nflx')
 
-@st.cache
+@st.cache_data
 def yahoo_news(stock):
     nws = news.get_yf_rss(stock)
     return nws
 
-@st.cache
+@st.cache_data
 def comp_prices(stocks):
     
     df = pd.DataFrame()
@@ -323,6 +323,9 @@ with valuation:
     if g==0:
         g=float(str(growth).replace('%',''))
     
+    if eps_value<0:
+        eps_value=st.number_input('Enter EPS value: ')
+
     # If user growth value and yahoo growth value is 0, ask user to input value
     if g==0 or math.isnan(g):
         st.warning('Expected growth data is unavailable on Yahoo Finance. Please use the slider above to select a growth value')
