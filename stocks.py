@@ -326,6 +326,9 @@ with valuation:
     if g==0:
         g=float(str(growth).replace('%',''))
     
+    if eps_value<0:
+        eps_value=st.number_input('Enter EPS value: ')
+
     # If user growth value and yahoo growth value is 0, ask user to input value
     if g==0 or math.isnan(g):
         st.warning('Expected growth data is unavailable on Yahoo Finance. Please use the slider above to select a growth value')
