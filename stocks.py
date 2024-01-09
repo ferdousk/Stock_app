@@ -19,6 +19,10 @@ import re
 import nasdaqdatalink
 import math
 import numpy as np
+from PIL import Image
+#from pathlib import Path
+#import os
+
 
 api_key = 'db609a4e-d7d2-43ab-87bf-21961d2d7428'
 ss = StockSymbol(api_key)
@@ -124,7 +128,9 @@ def comp_prices(stocks):
 # Defining header container components
 with header:
     # Adding logo to the page
-    st.image(r"C:\Users\ferdo\Github\Stock_app\Stock_app\ferdous.JPG")
+    
+    logo = Image.open("./ferdous.JPG")
+    st.image(logo, use_column_width='always')
     
     # Page title and other text within the header container
     st.title('Stock Information and Comparison')
@@ -146,7 +152,6 @@ with base_info:
     # Columns for data visuals
     base_col_1,base_col_2,base_col_3,base_col_4 = st.columns(4)
     
-    st.markdown(f"PAndas version is {pd.__version__}")
     
     # Use yahoo finance to get data for the main stock
     try:
