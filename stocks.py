@@ -51,8 +51,8 @@ def ticker_list():
     
     for country in market_list[market_list['abbreviation'].isin(['uk','us','au'])]['abbreviation']:
         if not symbol.empty:
-            country = pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
-            symbol=pd.concat([symbol, country])
+            region = pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
+            symbol=pd.concat([symbol, region])
         else:
             symbol=pd.DataFrame(pd.DataFrame(ss.get_symbol_list(country)))
     
@@ -242,7 +242,9 @@ with base_info:
 		margin=dict(l=1,r=1,b=1,t=1),
 		#font=dict(color='#383635', size=15)
         )   
+
     st.write(f"column names: {stock_stats.columns}")
+
     base_col_2.write(stock_perf_chart)
     
     
