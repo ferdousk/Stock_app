@@ -242,7 +242,7 @@ with base_info:
 		margin=dict(l=1,r=1,b=1,t=1),
 		#font=dict(color='#383635', size=15)
         )   
-       
+    st.write(f"The las 52 weeks performance is {stock_perf}")
     base_col_2.write(stock_perf_chart)
     
     
